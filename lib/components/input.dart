@@ -21,7 +21,6 @@ class Input extends StatelessWidget {
         keyboardType: inputType,
         obscureText: obscure,
         controller: controller,
-        style: TextStyle(fontSize: 19.5),
       ),
     );
   }
