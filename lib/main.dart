@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todolist/screens/loaded.dart';
 import 'package:todolist/screens/loading.dart';
@@ -44,6 +45,7 @@ class App extends StatelessWidget {
           return Loading();
         },
       ),
+      builder: EasyLoading.init(),
     );
   }
 }

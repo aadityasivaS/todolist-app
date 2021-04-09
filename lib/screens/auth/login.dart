@@ -1,5 +1,11 @@
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:todolist/components/errorAlert.dart';
 import 'package:todolist/components/input.dart';
+import 'package:todolist/screens/app.dart';
+import 'package:todolist/screens/auth/register.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -9,6 +15,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,10 +40,12 @@ class _LoginState extends State<Login> {
                 Input(
                   label: 'Email',
                   controller: emailController,
+                  inputType: TextInputType.emailAddress,
                 ),
                 Input(
                   label: 'Password',
                   controller: passwordController,
+                  obscure: true,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
@@ -44,7 +53,56 @@ class _LoginState extends State<Login> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (emailController.text == '') {
+                            showErrorDialog(
+                              context,
+                              'Error',
+                              'Please provide an email address',
+                            );
+                          } else if (passwordController.text == '') {
+                            showErrorDialog(
+                              context,
+                              'Error',
+                              'Please provide a password',
+                            );
+                          } else if (EmailValidator.validate(
+                                  emailController.text) ==
+                              false) {
+                            showErrorDialog(context, 'Error', 'Invalid email');
+                          } else {
+                            try {
+                              auth
+                                  .signInWithEmailAndPassword(
+                                      email: emailController.text,
+                                      password: passwordController.text)
+                                  .then((value) {
+                                EasyLoading.dismiss();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AppScreen(),
+                                  ),
+                                );
+                              });
+                            } on FirebaseAuthException catch (e) {
+                              if (e.code == 'user-not-found') {
+                                showErrorDialog(
+                                  context,
+                                  'Error',
+                                  'Email or password is incorrect',
+                                );
+                              } else if (e.code == 'wrong-password') {
+                                showErrorDialog(
+                                  context,
+                                  'Error',
+                                  'Email or password is incorrect',
+                                );
+                              }
+                            }
+                            EasyLoading.show(status: 'Please wait...');
+                          }
+                        },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 10,
@@ -54,7 +112,14 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Register(),
+                            ),
+                          );
+                        },
                         child: Text('Don\'t have an account? Create one!'),
                       )
                     ],

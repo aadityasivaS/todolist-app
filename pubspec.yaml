@@ -18,6 +18,8 @@ dependencies:
   cloud_firestore: ^1.0.4
   lottie: ^1.0.1
   google_fonts: ^2.0.0
+  email_validator: ^2.0.1
+  flutter_easyloading: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -27,3 +29,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - google_fonts/
