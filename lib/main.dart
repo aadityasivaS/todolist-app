@@ -24,7 +24,7 @@ class App extends StatelessWidget {
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             primary: primaryColor,
-            textStyle: TextStyle(fontSize: 23),
+            textStyle: TextStyle(fontSize: 19),
           ),
         ),
         textButtonTheme: TextButtonThemeData(
