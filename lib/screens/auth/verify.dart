@@ -21,7 +21,7 @@ class _VerifyState extends State<Verify> {
               Lottie.asset('assets/email-animation.zip',
                   repeat: false, width: 350),
               Padding(
-                padding: const EdgeInsets.only(bottom: 15),
+                padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
                 child: Text(
                   'We have sent you a verification email please click on the link in the email to verify your account after you verify your email press login below',
                   style: TextStyle(fontSize: 20),

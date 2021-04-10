@@ -71,13 +71,14 @@ class _LoginState extends State<Login> {
                               false) {
                             showErrorDialog(context, 'Error', 'Invalid email');
                           } else {
+                            EasyLoading.show(status: 'Please wait...');
                             try {
+                              EasyLoading.dismiss();
                               auth
                                   .signInWithEmailAndPassword(
                                       email: emailController.text,
                                       password: passwordController.text)
                                   .then((value) {
-                                EasyLoading.dismiss();
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -86,6 +87,7 @@ class _LoginState extends State<Login> {
                                 );
                               });
                             } on FirebaseAuthException catch (e) {
+                              EasyLoading.dismiss();
                               if (e.code == 'user-not-found') {
                                 showErrorDialog(
                                   context,
@@ -99,8 +101,9 @@ class _LoginState extends State<Login> {
                                   'Email or password is incorrect',
                                 );
                               }
+                            } catch (e) {
+                              showErrorDialog(context, 'Error', e.toString());
                             }
-                            EasyLoading.show(status: 'Please wait...');
                           }
                         },
                         child: Padding(
