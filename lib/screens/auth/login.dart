@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:todolist/components/errorAlert.dart';
 import 'package:todolist/components/input.dart';
-import 'package:todolist/screens/app.dart';
+import 'package:todolist/screens/app/app.dart';
 import 'package:todolist/screens/auth/register.dart';
 
 class Login extends StatefulWidget {
