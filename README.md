@@ -1,16 +1,8 @@
-# todolist
+# Todolist
 
-A new Flutter project.
+A todolist app created with flutter and firebase.
+To build this app from the source code do the following steps:
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Get the dependencies `flutter pub get`
+2. You will see that there is only the android directory it is because I built this app for android only. If you want to do for any other platform see this https://firebase.flutter.dev/docs/overview#platform-setup
+3. Add firebase to the project https://firebase.flutter.dev/docs/overview
