@@ -73,12 +73,12 @@ class _LoginState extends State<Login> {
                           } else {
                             EasyLoading.show(status: 'Please wait...');
                             try {
-                              EasyLoading.dismiss();
                               auth
                                   .signInWithEmailAndPassword(
                                       email: emailController.text,
                                       password: passwordController.text)
                                   .then((value) {
+                                EasyLoading.dismiss();
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
