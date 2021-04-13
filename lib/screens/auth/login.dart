@@ -85,23 +85,19 @@ class _LoginState extends State<Login> {
                                     builder: (context) => AppScreen(),
                                   ),
                                 );
+                              }).onError((error, stackTrace) {
+                                EasyLoading.dismiss();
+                                showErrorDialog(context, 'Error', error.toString());
                               });
                             } on FirebaseAuthException catch (e) {
                               EasyLoading.dismiss();
-                              if (e.code == 'user-not-found') {
-                                showErrorDialog(
-                                  context,
-                                  'Error',
-                                  'Email or password is incorrect',
-                                );
-                              } else if (e.code == 'wrong-password') {
-                                showErrorDialog(
-                                  context,
-                                  'Error',
-                                  'Email or password is incorrect',
-                                );
-                              }
+                              showErrorDialog(
+                                context,
+                                'Error',
+                                e.code,
+                              );
                             } catch (e) {
+                              EasyLoading.dismiss();
                               showErrorDialog(context, 'Error', e.toString());
                             }
                           }
