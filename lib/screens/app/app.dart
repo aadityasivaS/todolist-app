@@ -18,8 +18,16 @@ class _AppScreenState extends State<AppScreen> {
 
   @override
   void initState() {
-    db.collection('users').doc(auth.currentUser!.uid).update({});
+    addUserDocIfNotExists();
     super.initState();
+  }
+
+  void addUserDocIfNotExists() async {
+    await db.doc('users/${auth.currentUser!.uid}').get().then((doc) {
+      if (!doc.exists) {
+        db.collection('users').doc(auth.currentUser!.uid).set({});
+      }
+    });
   }
 
   @override
