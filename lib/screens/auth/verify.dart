@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lottie/lottie.dart';
+import 'package:todolist/components/errorAlert.dart';
 import 'package:todolist/screens/auth/login.dart';
 
 class Verify extends StatefulWidget {
@@ -30,14 +32,12 @@ class _VerifyState extends State<Verify> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  auth.signOut().then(
-                        (value) => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Login(),
-                          ),
-                        ),
-                      );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Login(),
+                    ),
+                  );
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -45,6 +45,24 @@ class _VerifyState extends State<Verify> {
                     horizontal: 15,
                   ),
                   child: Text('Login'),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  EasyLoading.show(status: 'Sending');
+                  auth.currentUser!.sendEmailVerification().then((value) {
+                    EasyLoading.dismiss();
+                    EasyLoading.showToast('Sent');
+                  }).onError((error, stackTrace) {
+                    showErrorDialog(context, 'Error', error.toString());
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 15,
+                  ),
+                  child: Text('Resend'),
                 ),
               ),
             ],

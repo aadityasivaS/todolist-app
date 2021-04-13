@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todolist/screens/app/tabs/lists.dart';
@@ -11,12 +12,16 @@ class AppScreen extends StatefulWidget {
 
 class _AppScreenState extends State<AppScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore db = FirebaseFirestore.instance;
   int currentPage = 0;
-  List<Widget> tabs = [
-    ListsTab(),
-    StarredTab(),
-    SettingsTab()
-  ];
+  List<Widget> tabs = [ListsTab(), StarredTab(), SettingsTab()];
+
+  @override
+  void initState() {
+    db.collection('users').doc(auth.currentUser!.uid).update({});
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
