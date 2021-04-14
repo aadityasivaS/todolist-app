@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class ListsTab extends StatefulWidget {
   @override
@@ -6,6 +9,8 @@ class ListsTab extends StatefulWidget {
 }
 
 class _ListsTabState extends State<ListsTab> {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
   String greeting() {
     var hour = DateTime.now().hour;
     if (hour < 12) {
@@ -19,6 +24,8 @@ class _ListsTabState extends State<ListsTab> {
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference usersLists = FirebaseFirestore.instance
+        .collection('users/${auth.currentUser!.uid}/lists');
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -32,6 +39,36 @@ class _ListsTabState extends State<ListsTab> {
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
             ),
+            StreamBuilder<QuerySnapshot>(
+              stream: usersLists.snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Something went wrong');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  EasyLoading.show(status: 'Loading...');
+                }
+
+                if (snapshot.data != null && snapshot.data!.docs.length == 0) {
+                  EasyLoading.dismiss();
+                  return Flexible(
+                    child: Center(
+                      child: Text(
+                        'You currently have no todolists press the + button to make one',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 21,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return Container();
+              },
+            )
           ],
         ),
       ),
