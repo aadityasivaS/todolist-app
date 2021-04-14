@@ -32,6 +32,12 @@ class App extends StatelessWidget {
             primary: primaryColor,
           ),
         ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: primaryColor,
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          selectedItemColor: primaryColor
+        ),
       ),
       home: FutureBuilder(
         future: _initialization,

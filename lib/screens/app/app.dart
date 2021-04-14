@@ -53,6 +53,13 @@ class _AppScreenState extends State<AppScreen> {
           ),
         ],
       ),
+      floatingActionButton: Visibility(
+        visible: currentPage == 0,
+        child: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {},
+        ),
+      ),
     );
   }
 }
