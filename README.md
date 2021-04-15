@@ -1,3 +1,4 @@
+
 # Todolist
 
 A todolist app created with flutter and firebase.
@@ -9,3 +10,9 @@ To build this app from the source code do the following steps:
 4. In the firebase console enable email signin .
 > 👆 Do not enable the passwordless signin in firebase console
 
+5. make a file called secrets.json and put your pixabay API key
+``
+{
+  "pixabayAPIKey": "your pixabay api key"
+}
+``
