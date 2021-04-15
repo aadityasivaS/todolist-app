@@ -21,6 +21,7 @@ dependencies:
   email_validator: ^2.0.1
   flutter_easyloading: ^3.0.0
   carousel_slider: ^4.0.0-nullsafety.0
+  firebase_remote_config: ^0.10.0-dev.0
 
 dev_dependencies:
   flutter_test:
