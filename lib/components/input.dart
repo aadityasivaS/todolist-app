@@ -20,7 +20,8 @@ class Input extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: label,
+          labelText: !center ? label : null,
+          hintText: center ? label : null,
         ),
         textAlign: TextAlign.center,
         keyboardType: inputType,
