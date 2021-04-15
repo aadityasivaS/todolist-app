@@ -23,6 +23,12 @@ class _ListsTabState extends State<ListsTab> {
   }
 
   @override
+  void dispose() {
+    EasyLoading.dismiss();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     CollectionReference usersLists = FirebaseFirestore.instance
         .collection('users/${auth.currentUser!.uid}/lists');
