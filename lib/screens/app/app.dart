@@ -92,13 +92,6 @@ class _AppScreenState extends State<AppScreen> {
                             icon: Icon(Icons.add),
                             label: Text('Add Task'),
                           ),
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            icon: Icon(Icons.close),
-                            label: Text('Close'),
-                          ),
                         ],
                       ),
                     ),
