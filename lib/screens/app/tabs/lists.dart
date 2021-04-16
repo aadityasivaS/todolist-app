@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class ListsTab extends StatefulWidget {
   @override
@@ -72,7 +73,30 @@ class _ListsTabState extends State<ListsTab> {
                     ),
                   );
                 }
-                return Container();
+                EasyLoading.dismiss();
+                return CarouselSlider(
+                  options: CarouselOptions(
+                    initialPage: 0,
+                    aspectRatio: 2.0,
+                    enlargeCenterPage: true,
+                    enableInfiniteScroll: false,
+                    height: 500
+                  ),
+                  items: [1, 2, 3, 4, 5].map((i) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(color: Colors.amber),
+                            child: Text(
+                              'text $i',
+                              style: TextStyle(fontSize: 16.0),
+                            ));
+                      },
+                    );
+                  }).toList(),
+                );
               },
             )
           ],
