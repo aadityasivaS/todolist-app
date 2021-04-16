@@ -19,6 +19,12 @@ service cloud.firestore {
       allow read, update, delete: if request.auth != null && request.auth.uid == userId;
       allow create: if request.auth != null;
     }
+    match /users/{userId}/lists/{id=**} {
+      allow read, update, delete, create: if request.auth != null && request.auth.uid == userId;
+    }
+    match /users/{userId}/lists/{id}/tasks/{taskId=**} {
+      allow read, update, delete, create: if request.auth != null && request.auth.uid == userId;
+    }
   }
 }
 ```
