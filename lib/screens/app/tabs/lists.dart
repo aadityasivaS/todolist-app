@@ -73,30 +73,63 @@ class _ListsTabState extends State<ListsTab> {
                     ),
                   );
                 }
-                EasyLoading.dismiss();
-                return CarouselSlider(
-                  options: CarouselOptions(
-                    initialPage: 0,
-                    aspectRatio: 2.0,
-                    enlargeCenterPage: true,
-                    enableInfiniteScroll: false,
-                    height: 500
-                  ),
-                  items: [1, 2, 3, 4, 5].map((i) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                            width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.symmetric(horizontal: 5.0),
-                            decoration: BoxDecoration(color: Colors.amber),
-                            child: Text(
-                              'text $i',
-                              style: TextStyle(fontSize: 16.0),
-                            ));
-                      },
-                    );
-                  }).toList(),
-                );
+                if (snapshot.data != null) {
+                  EasyLoading.dismiss();
+                  return Expanded(
+                    child: CarouselSlider(
+                        options: CarouselOptions(
+                          initialPage: 0,
+                          aspectRatio: 2.0,
+                          enlargeCenterPage: true,
+                          enableInfiniteScroll: false,
+                          height: MediaQuery.of(context).size.height,
+                          viewportFraction: 0.84,
+                        ),
+                        items: snapshot.data!.docs
+                            .map(
+                              (e) => Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      offset: Offset(0.0, 4.0),
+                                      blurRadius: 4.0,
+                                    ),
+                                  ],
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                      e.get('imageURL'),
+                                    ),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Container(
+                                    width: double.infinity,
+                                    color: Colors.black.withOpacity(0.6),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                      child: Text(
+                                        e.get('title'),
+                                        style: TextStyle(
+                                          fontSize: 35.0,
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList()),
+                  );
+                }
+                return Container();
               },
             )
           ],
