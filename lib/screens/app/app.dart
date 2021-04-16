@@ -123,6 +123,7 @@ class _AppScreenState extends State<AppScreen> {
                                     setState(() {
                                       modalNewList.text = '';
                                       EasyLoading.dismiss();
+                                      Navigator.of(context).pop();
                                     });
                                   });
                                 });
