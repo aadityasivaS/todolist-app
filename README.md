@@ -2,7 +2,7 @@
 # Todolist (Not Ready)
 
 A todolist app created with flutter and firebase.
-To build this app from the source code complete following steps:
+To build this app from the source code complete the following steps:
 
 1. Get the dependencies `flutter pub get`
 2. You will see that there is only the android directory it is because I built this app for android only. If you want to do for iOS platform first run `flutter create .` in the root and see these https://firebase.flutter.dev/docs/installation/ios
