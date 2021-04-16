@@ -1,5 +1,5 @@
 
-# Todolist
+# Todolist (Not Ready)
 
 A todolist app created with flutter and firebase.
 To build this app from the source code do the following steps:
@@ -9,3 +9,16 @@ To build this app from the source code do the following steps:
 3. Add firebase to the project https://firebase.flutter.dev/docs/overview
 4. In the firebase console enable email signin .
 > 👆 Do not enable the passwordless signin in firebase console
+5. Inable firestore in the firebase console
+6. Set this as the security rules
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null;
+    }
+  }
+}
+```
