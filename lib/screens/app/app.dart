@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +39,7 @@ class _AppScreenState extends State<AppScreen> {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       var res = await response.stream.bytesToString();
-      return jsonDecode(res)['hits'][0]['webformatURL'];
+      return jsonDecode(res)['hits'][0]['largeImageURL'];
     } else {
       showErrorDialog(context, 'Error', response.reasonPhrase);
     }
@@ -82,6 +81,7 @@ class _AppScreenState extends State<AppScreen> {
         visible: currentPage == 0,
         child: FloatingActionButton(
           child: Icon(Icons.add),
+          heroTag: 'SharedFAB',
           onPressed: () {
             showModalBottomSheet(
               context: context,
@@ -116,7 +116,10 @@ class _AppScreenState extends State<AppScreen> {
                               if (modalNewList.text != '') {
                                 EasyLoading.show(status: 'Please wait...');
                                 getImage(modalNewList.text).then((value) {
-                                  db.doc('users/$uid').collection('lists').add({
+                                  db
+                                      .doc('users/$uid')
+                                      .collection('lists')
+                                      .add({
                                     'title': modalNewList.text,
                                     'imageURL': value.toString()
                                   }).then((value) {
