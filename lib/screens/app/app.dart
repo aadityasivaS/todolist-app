@@ -110,6 +110,7 @@ class _AppScreenState extends State<AppScreen> {
                             label: 'Title',
                             controller: modalNewList,
                             center: true,
+                            suggestions: true,
                           ),
                           ElevatedButton.icon(
                             onPressed: () async {
