@@ -139,8 +139,9 @@ class _ListsTabState extends State<ListsTab> {
                               openBuilder: (context, action) => ListViewScreen(
                                 bgImageURL: e.get('imageURL'),
                                 title: e.get('title'),
+                                docID: e.id,
                               ),
-                              transitionDuration: Duration(milliseconds: 450),
+                              transitionDuration: Duration(milliseconds: 400),
                             ),
                           )
                           .toList(),
