@@ -22,7 +22,7 @@ class Input extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: center ? label : null,
+          labelText: !center ? label : null,
           hintText: center ? label : null,
         ),
         textAlign: center ? TextAlign.center : TextAlign.start,
