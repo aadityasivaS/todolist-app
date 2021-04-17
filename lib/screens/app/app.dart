@@ -7,7 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:todolist/components/errorAlert.dart';
 import 'package:todolist/components/input.dart';
 import 'package:todolist/screens/app/tabs/lists.dart';
-import 'package:todolist/screens/app/tabs/settings.dart';
+import 'package:todolist/screens/app/tabs/account.dart';
 import 'package:todolist/screens/app/tabs/starred.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,7 +21,7 @@ class _AppScreenState extends State<AppScreen> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   TextEditingController modalNewList = TextEditingController();
   int currentPage = 0;
-  List<Widget> tabs = [ListsTab(), StarredTab(), SettingsTab()];
+  List<Widget> tabs = [ListsTab(), StarredTab(), AccountSettings()];
   @override
   void initState() {
     String uid = auth.currentUser!.uid;
@@ -72,8 +72,8 @@ class _AppScreenState extends State<AppScreen> {
             label: 'Starred',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.account_circle),
+            label: 'Account',
           ),
         ],
       ),

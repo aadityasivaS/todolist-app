@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SettingsTab extends StatefulWidget {
+class AccountSettings extends StatefulWidget {
   @override
-  _SettingsTabState createState() => _SettingsTabState();
+  _AccountSettingsState createState() => _AccountSettingsState();
 }
 
-class _SettingsTabState extends State<SettingsTab> {
+class _AccountSettingsState extends State<AccountSettings> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -17,7 +17,7 @@ class _SettingsTabState extends State<SettingsTab> {
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
-                'Settings',
+                'Account Settings',
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
             ),
