@@ -141,7 +141,6 @@ class _ListsTabState extends State<ListsTab> {
                                 title: e.get('title'),
                                 docID: e.id,
                               ),
-                              transitionDuration: Duration(milliseconds: 400),
                             ),
                           )
                           .toList(),
