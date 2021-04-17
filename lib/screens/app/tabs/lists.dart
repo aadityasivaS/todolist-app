@@ -140,6 +140,7 @@ class _ListsTabState extends State<ListsTab> {
                                 bgImageURL: e.get('imageURL'),
                                 title: e.get('title'),
                                 docID: e.id,
+                                uid: auth.currentUser!.uid,
                               ),
                             ),
                           )

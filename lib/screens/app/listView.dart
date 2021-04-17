@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ListViewScreen extends StatefulWidget {
-  final bgImageURL;
-  final title;
-  const ListViewScreen({this.bgImageURL, this.title});
+  final String bgImageURL;
+  final String title;
+  final String docID;
+  final String uid;
+  const ListViewScreen(
+      {required this.bgImageURL, required this.title, required this.docID, required this.uid});
   @override
   _ListViewScreenState createState() => _ListViewScreenState();
 }
 
 class _ListViewScreenState extends State<ListViewScreen> {
+  FirebaseFirestore db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +53,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
                         Hero(
                           tag: 'titleCard',
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               IconButton(
                                 icon: Icon(
@@ -64,6 +70,29 @@ class _ListViewScreenState extends State<ListViewScreen> {
                                   fontSize: 30.0,
                                   color: Colors.white,
                                 ),
+                              ),
+                              PopupMenuButton(
+                                onSelected: (clicked) {
+                                  print(clicked);
+                                  if(clicked == 'Delete this list') {
+                                    db.doc('users/${widget.uid}/lists/${widget.docID}').delete().then((value) {
+                                      Navigator.pop(context);
+                                    });
+                                  }
+                                },
+                                icon: Icon(
+                                  Icons.more_vert,
+                                  color: Colors.white,
+                                ),
+                                itemBuilder: (BuildContext context) {
+                                  return {'Star this list', 'Delete this list'}
+                                      .map((String choice) {
+                                    return PopupMenuItem<String>(
+                                      value: choice,
+                                      child: Text(choice),
+                                    );
+                                  }).toList();
+                                },
                               ),
                             ],
                           ),
