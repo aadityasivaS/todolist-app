@@ -140,7 +140,7 @@ class _ListsTabState extends State<ListsTab> {
                                 bgImageURL: e.get('imageURL'),
                                 title: e.get('title'),
                               ),
-                              transitionDuration: Duration(milliseconds: 400),
+                              transitionDuration: Duration(milliseconds: 450),
                             ),
                           )
                           .toList(),
