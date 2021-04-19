@@ -1,5 +1,5 @@
 
-# Todolist (Not Ready)
+# Todolist
 
 A todolist app created with flutter and firebase.
 To build this app from the source code complete the following steps:
