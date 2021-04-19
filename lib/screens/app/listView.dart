@@ -186,7 +186,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
                               return Flexible(
                                 child: Center(
                                   child: Text(
-                                    'You currently have no todolists press the + button to make one',
+                                    'You currently have no tasks press the + button to make one',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 21,
@@ -197,10 +197,15 @@ class _ListViewScreenState extends State<ListViewScreen> {
                                 ),
                               );
                             }
-                            if (snapshot.data != null) {
-                              print(snapshot.data);
-                            }
-                            return Container();
+                            return snapshot.data != null
+                                ? Flexible(
+                                    child: ListView.builder(
+                                      itemBuilder: (context, index) => ListTile(
+                                        title: Text('$index'),
+                                      ),
+                                    ),
+                                  )
+                                : Container();
                           },
                         )
                       ],
