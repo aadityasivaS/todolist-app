@@ -26,7 +26,7 @@ service cloud.firestore {
     match /users/{userId}/lists/{id}/tasks/{taskId=**} {
       allow read, update, delete, create: if request.auth != null && request.auth.uid == userId;
     }
-    match /users/{userId}/lists/{id}/starred/{taskId=**} {
+    match /users/{userId}/starred/{starredListID}/ {
       allow read, update, delete, create: if request.auth != null && request.auth.uid == userId;
     }
   }
