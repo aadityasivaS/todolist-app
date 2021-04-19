@@ -1,21 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:todolist/components/errorAlert.dart';
+import 'package:todolist/components/input.dart';
 
 class ListViewScreen extends StatefulWidget {
   final String bgImageURL;
   final String title;
   final String docID;
   final String uid;
+  final bool starred;
   const ListViewScreen(
-      {required this.bgImageURL, required this.title, required this.docID, required this.uid});
+      {required this.bgImageURL,
+      required this.title,
+      required this.docID,
+      required this.uid,
+      required this.starred});
   @override
   _ListViewScreenState createState() => _ListViewScreenState();
 }
 
 class _ListViewScreenState extends State<ListViewScreen> {
   FirebaseFirestore db = FirebaseFirestore.instance;
+  TextEditingController modalNewTask = TextEditingController();
+  bool starred = false;
+  @override
+  void initState() {
+    if (widget.starred) {
+      starred = true;
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    EasyLoading.dismiss();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    CollectionReference tasks = FirebaseFirestore.instance
+        .collection('users/${widget.uid}/lists/${widget.docID}/tasks');
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -73,10 +100,25 @@ class _ListViewScreenState extends State<ListViewScreen> {
                               ),
                               PopupMenuButton(
                                 onSelected: (clicked) {
-                                  print(clicked);
-                                  if(clicked == 'Delete this list') {
-                                    db.doc('users/${widget.uid}/lists/${widget.docID}').delete().then((value) {
+                                  if (clicked == 'Delete') {
+                                    EasyLoading.show(status: 'Please wait...');
+                                    db
+                                        .doc(
+                                          'users/${widget.uid}/lists/${widget.docID}',
+                                        )
+                                        .delete()
+                                        .then((value) {
+                                      EasyLoading.dismiss();
                                       Navigator.pop(context);
+                                    });
+                                  } else if (clicked == 'Star') {
+                                    setState(() {
+                                      starred = !starred;
+                                      print(starred);
+                                      db
+                                          .doc(
+                                              'users/${widget.uid}/lists/${widget.docID}')
+                                          .update({'starred': starred});
                                     });
                                   }
                                 },
@@ -84,18 +126,82 @@ class _ListViewScreenState extends State<ListViewScreen> {
                                   Icons.more_vert,
                                   color: Colors.white,
                                 ),
-                                itemBuilder: (BuildContext context) {
-                                  return {'Star this list', 'Delete this list'}
-                                      .map((String choice) {
-                                    return PopupMenuItem<String>(
-                                      value: choice,
-                                      child: Text(choice),
-                                    );
-                                  }).toList();
-                                },
+                                itemBuilder: (BuildContext context) =>
+                                    <PopupMenuEntry>[
+                                  PopupMenuItem(
+                                    value: 'Delete',
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.delete),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Text('Delete')
+                                      ],
+                                    ),
+                                  ),
+                                  PopupMenuDivider(),
+                                  PopupMenuItem(
+                                    value: 'Star',
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          !starred
+                                              ? Icons.star
+                                              : Icons.star_border,
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Text(
+                                          !starred ? 'Star' : 'Unstar',
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
+                        ),
+                        StreamBuilder<QuerySnapshot>(
+                          stream: tasks.snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return Text(
+                                'Something went wrong',
+                                style: TextStyle(color: Colors.white),
+                              );
+                            }
+
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              EasyLoading.show(status: 'Loading...');
+                            }
+
+                            if (snapshot.data != null &&
+                                snapshot.data!.docs.length == 0) {
+                              EasyLoading.dismiss();
+                              return Flexible(
+                                child: Center(
+                                  child: Text(
+                                    'You currently have no todolists press the + button to make one',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 21,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                            if (snapshot.data != null) {
+                              print(snapshot.data);
+                            }
+                            return Container();
+                          },
                         )
                       ],
                     ),
@@ -108,7 +214,69 @@ class _ListViewScreenState extends State<ListViewScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
+            builder: (context) {
+              return SafeArea(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 60,
+                      horizontal: 30,
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'New Task',
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Input(
+                          label: 'Title',
+                          controller: modalNewTask,
+                          center: true,
+                          suggestions: true,
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            if (modalNewTask.text != '') {
+                              EasyLoading.show(status: 'Please wait...');
+                              tasks.add({
+                                'title': modalNewTask.text,
+                                'done': false
+                              }).then((value) {
+                                EasyLoading.dismiss();
+                                Navigator.of(context).pop();
+                              });
+                            } else {
+                              EasyLoading.dismiss();
+                              showErrorDialog(
+                                context,
+                                'Error',
+                                'Please provide a task title',
+                              );
+                            }
+                          },
+                          icon: Icon(Icons.add),
+                          label: Text('Add Task'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
         heroTag: 'SharedFAB',
       ),
     );

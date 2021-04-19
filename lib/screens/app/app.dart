@@ -122,7 +122,8 @@ class _AppScreenState extends State<AppScreen> {
                                       .collection('lists')
                                       .add({
                                     'title': modalNewList.text,
-                                    'imageURL': value.toString()
+                                    'imageURL': value.toString(),
+                                    'starred': false
                                   }).then((value) {
                                     setState(() {
                                       modalNewList.text = '';

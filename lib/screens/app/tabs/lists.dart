@@ -141,6 +141,7 @@ class _ListsTabState extends State<ListsTab> {
                                 title: e.get('title'),
                                 docID: e.id,
                                 uid: auth.currentUser!.uid,
+                                starred: e.get('starred'),
                               ),
                             ),
                           )
