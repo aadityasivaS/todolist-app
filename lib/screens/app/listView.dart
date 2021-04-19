@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -233,14 +234,15 @@ class _ListViewScreenState extends State<ListViewScreen> {
                                             snapshot.data!.docs.map((doc) {
                                       EasyLoading.dismiss();
                                       return ListTile(
-                                        title: Text(
-                                          doc.data()['title'],
+                                        title: AutoSizeText(
+                                          doc.data()['title'].toString().trim(),
                                           style: TextStyle(
                                             decoration: doc.data()['done']
                                                 ? TextDecoration.lineThrough
                                                 : TextDecoration.none,
                                             color: Colors.white,
                                           ),
+                                          maxLines: 1,
                                         ),
                                         trailing: Theme(
                                           data: ThemeData(
