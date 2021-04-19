@@ -102,6 +102,12 @@ class _ListViewScreenState extends State<ListViewScreen> {
                                 onSelected: (clicked) {
                                   if (clicked == 'Delete') {
                                     EasyLoading.show(status: 'Please wait...');
+                                    if (starred) {
+                                      db
+                                          .doc(
+                                              'users/${widget.uid}/starred/${widget.docID}')
+                                          .delete();
+                                    }
                                     db
                                         .doc(
                                           'users/${widget.uid}/lists/${widget.docID}',
