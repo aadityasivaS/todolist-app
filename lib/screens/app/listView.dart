@@ -197,13 +197,36 @@ class _ListViewScreenState extends State<ListViewScreen> {
                                 ),
                               );
                             }
+
                             return snapshot.data != null
                                 ? Flexible(
-                                    child: ListView.builder(
-                                      itemBuilder: (context, index) => ListTile(
-                                        title: Text('$index'),
-                                      ),
-                                    ),
+                                    child: ListView(
+                                        children:
+                                            snapshot.data!.docs.map((doc) {
+                                      EasyLoading.dismiss();
+                                      return ListTile(
+                                        title: Text(
+                                          doc.data()['title'],
+                                          style: TextStyle(
+                                            decoration: doc.data()['done'] ? TextDecoration.lineThrough : TextDecoration.none,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        trailing: Theme(
+                                          data: ThemeData(
+                                            unselectedWidgetColor: Colors.white,
+                                          ),
+                                          child: Checkbox(
+                                            value: doc.data()['done'],
+                                            onChanged: (newValue) {
+                                              tasks.doc(doc.id).update(
+                                                {'done': !doc.data()['done']},
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    }).toList()),
                                   )
                                 : Container();
                           },
@@ -259,6 +282,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
                                 'title': modalNewTask.text,
                                 'done': false
                               }).then((value) {
+                                modalNewTask.text = '';
                                 EasyLoading.dismiss();
                                 Navigator.of(context).pop();
                               });
