@@ -114,7 +114,29 @@ class _ListViewScreenState extends State<ListViewScreen> {
                                   } else if (clicked == 'Star') {
                                     setState(() {
                                       starred = !starred;
-                                      print(starred);
+                                      if (starred == true) {
+                                        db
+                                            .doc(
+                                                'users/${widget.uid}/starred/${widget.docID}')
+                                            .get()
+                                            .then((doc) {
+                                          if (!doc.exists) {
+                                            db
+                                                .collection(
+                                                    'users/${widget.uid}/starred')
+                                                .doc(widget.docID)
+                                                .set({
+                                              'title': widget.title,
+                                              'imageURL': widget.bgImageURL
+                                            });
+                                          }
+                                        });
+                                      } else {
+                                        db
+                                            .doc(
+                                                'users/${widget.uid}/starred/${widget.docID}')
+                                            .delete();
+                                      }
                                       db
                                           .doc(
                                               'users/${widget.uid}/lists/${widget.docID}')
@@ -208,7 +230,9 @@ class _ListViewScreenState extends State<ListViewScreen> {
                                         title: Text(
                                           doc.data()['title'],
                                           style: TextStyle(
-                                            decoration: doc.data()['done'] ? TextDecoration.lineThrough : TextDecoration.none,
+                                            decoration: doc.data()['done']
+                                                ? TextDecoration.lineThrough
+                                                : TextDecoration.none,
                                             color: Colors.white,
                                           ),
                                         ),
