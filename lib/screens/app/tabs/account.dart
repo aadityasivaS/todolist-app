@@ -17,7 +17,7 @@ class _AccountSettingsState extends State<AccountSettings> {
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
-                'Account Settings',
+                'Account',
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
             ),
