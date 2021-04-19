@@ -141,7 +141,7 @@ class _AppScreenState extends State<AppScreen> {
                               }
                             },
                             icon: Icon(Icons.add),
-                            label: Text('Add Task'),
+                            label: Text('Add List'),
                           ),
                         ],
                       ),
