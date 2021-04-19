@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:todolist/screens/loaders/loaded.dart';
 
 class AccountSettings extends StatefulWidget {
   @override
@@ -6,6 +8,7 @@ class AccountSettings extends StatefulWidget {
 }
 
 class _AccountSettingsState extends State<AccountSettings> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,6 +22,31 @@ class _AccountSettingsState extends State<AccountSettings> {
               child: Text(
                 'Account',
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Expanded(
+              child: ListView(
+                children: [
+                  Card(
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.account_box,
+                      ),
+                      title: Text(
+                        'Sign Out',
+                      ),
+                      onTap: () {
+                        auth.signOut().then(
+                              (value) => Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => Loaded(),
+                                ),
+                              ),
+                            );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
