@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:todolist/components/errorAlert.dart';
-import 'package:todolist/components/input.dart';
+import 'package:todolist_app/components/errorAlert.dart';
+import 'package:todolist_app/components/input.dart';
 
 class ListViewScreen extends StatefulWidget {
   final String bgImageURL;

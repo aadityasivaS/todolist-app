@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lottie/lottie.dart';
-import 'package:todolist/components/errorAlert.dart';
-import 'package:todolist/screens/auth/login.dart';
+import 'package:todolist_app/components/errorAlert.dart';
+import 'package:todolist_app/screens/auth/login.dart';
 
 class Verify extends StatefulWidget {
   @override

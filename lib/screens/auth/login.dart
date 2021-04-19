@@ -2,10 +2,10 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:todolist/components/errorAlert.dart';
-import 'package:todolist/components/input.dart';
-import 'package:todolist/screens/app/app.dart';
-import 'package:todolist/screens/auth/register.dart';
+import 'package:todolist_app/components/errorAlert.dart';
+import 'package:todolist_app/components/input.dart';
+import 'package:todolist_app/screens/app/app.dart';
+import 'package:todolist_app/screens/auth/register.dart';
 
 class Login extends StatefulWidget {
   @override

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:todolist/screens/loaders/loaded.dart';
+import 'package:todolist_app/screens/loaders/loaded.dart';
 
 class AccountSettings extends StatefulWidget {
   @override

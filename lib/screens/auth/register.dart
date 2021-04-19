@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:todolist/components/input.dart';
+import 'package:todolist_app/components/input.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:todolist/components/errorAlert.dart';
+import 'package:todolist_app/components/errorAlert.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:todolist/screens/loaders/loaded.dart';
+import 'package:todolist_app/screens/loaders/loaded.dart';
 
 class Register extends StatefulWidget {
   @override

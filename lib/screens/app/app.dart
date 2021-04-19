@@ -4,11 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:todolist/components/errorAlert.dart';
-import 'package:todolist/components/input.dart';
-import 'package:todolist/screens/app/tabs/lists.dart';
-import 'package:todolist/screens/app/tabs/account.dart';
-import 'package:todolist/screens/app/tabs/starred.dart';
+import 'package:todolist_app/components/errorAlert.dart';
+import 'package:todolist_app/components/input.dart';
+import 'package:todolist_app/screens/app/tabs/lists.dart';
+import 'package:todolist_app/screens/app/tabs/account.dart';
+import 'package:todolist_app/screens/app/tabs/starred.dart';
 import 'package:http/http.dart' as http;
 
 class AppScreen extends StatefulWidget {

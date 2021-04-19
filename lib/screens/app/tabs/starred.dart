@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:animations/animations.dart';
-import 'package:todolist/screens/app/listView.dart';
+import 'package:todolist_app/screens/app/listView.dart';
 
 class StarredTab extends StatefulWidget {
   @override
